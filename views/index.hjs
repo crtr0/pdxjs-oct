@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='http://twitter.github.com/bootstrap/assets/css/bootstrap.css' />
+    <style> .suggestion { display: none } </style>
+  </head>
+  <body>
+    <h1>Hello PDX.js</h1>
+    <h2>What is the best food cart in Portland?</h2>
+    <p id="container"></p>
+  </body>
+  <script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io.connect();
+    socket.on('connect', function() {
+      socket.on('suggestion', function(data) {
+        var div = $('<pre>' + data.text + '</pre>');
+        $('#container').prepend(div);
+        div.addClass('suggestion').fadeIn();
+      });
+    });
+  </script>
+</html>
